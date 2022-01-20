@@ -1,6 +1,6 @@
 # Online Banking App
 
-Online Banking App is the revamped version of Web Self Service App. The app leverages standard web technologies and was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.7.
+Online Banking App is developed by me and 3 of my friends inspired by existing models. The app leverages standard web technologies and was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.7.
 
 ## Getting Started
 
@@ -30,6 +30,8 @@ npm install
 6. To preview the app, run the following command and navigate to `http://localhost:4200/`.
 ```
 ng serve
+or
+npm start
 ```
 
 The application is using the development server mobile instance with basic authentication by default. The credentials for the same are:
@@ -60,4 +62,4 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
 
 Thank you!
-# Online-Banking-Portal
+
