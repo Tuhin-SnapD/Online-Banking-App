@@ -17,7 +17,7 @@ npm install -g @angular/cli@9.1.7
 
 3. Clone the project locally into your system.
 ```
-git clone https://github.com/openMF/online-banking.git
+git clone https://github.com/Tuhin-SnapD/Online-Banking-App.git
 ```
 
 4. `cd` into project root directory and make sure you are on the master branch.
