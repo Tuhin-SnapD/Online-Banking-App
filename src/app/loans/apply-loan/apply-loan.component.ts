@@ -6,7 +6,7 @@ import { LoanService } from '../loan.service';
 import { principalValidator } from './validators';
 import { LoanRequest } from '../loanRequest.model';
 
-const dateOptions = {day: '2-digit', month: 'short', year: 'numeric'};
+const dateOptions = {day: '2-digit', month: 'short', year: 'numeric'} as const;
 
 @Component({
   selector: 'app-apply-loan',
