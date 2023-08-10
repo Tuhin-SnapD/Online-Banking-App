@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'online-banking-tpt',
@@ -13,12 +13,12 @@ export class TptComponent implements OnInit {
   toAccountOptions: any;
   displayedFromAccountOptions: any;
   displayedToAccountOptions: any;
-  transferForm: FormGroup;
+  transferForm: UntypedFormGroup;
   date = new Date();
 
 
   constructor(private route: ActivatedRoute,
-              private formBuilder: FormBuilder) {
+              private formBuilder: UntypedFormBuilder) {
     this.route.data.subscribe((data: {template: any}) => {
       const {fromAccountOptions, toAccountOptions} = data.template;
       this.fromAccountOptions = fromAccountOptions;
