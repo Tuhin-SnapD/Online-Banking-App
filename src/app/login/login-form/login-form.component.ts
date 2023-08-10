@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormGroupDirective } from '@angular/forms';
+import { UntypedFormGroup, UntypedFormBuilder, Validators, FormGroupDirective } from '@angular/forms';
 
 /** rxjs Imports */
 import { finalize } from 'rxjs/operators';
@@ -16,7 +16,7 @@ import { AlertService } from '../../core/alert/alert.service';
 export class LoginFormComponent implements OnInit {
 
   /** Login Form Group */
-  loginForm: FormGroup;
+  loginForm: UntypedFormGroup;
   passwordInputType: string;
   loading = false;
 
@@ -24,7 +24,7 @@ export class LoginFormComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder
    * @param {AuthenticationService} authenticationService Authentication Service
    */
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
     private authenticationService: AuthenticationService,
     private alertService: AlertService) { }
 

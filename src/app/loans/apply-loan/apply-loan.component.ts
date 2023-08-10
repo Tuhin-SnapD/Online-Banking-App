@@ -1,4 +1,4 @@
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -18,12 +18,12 @@ export class ApplyLoanComponent implements OnInit {
 
   productOptions: any;
   loanProductDetails: any;
-  applyLoanForm: FormGroup;
+  applyLoanForm: UntypedFormGroup;
   loanProductLoaded = false;
   date = (new Date()).toLocaleDateString('en-GB', dateOptions);
 
   constructor(private route: ActivatedRoute,
-              private formBuilder: FormBuilder,
+              private formBuilder: UntypedFormBuilder,
               private loanService: LoanService,
               private toastr: ToastrService) {
       this.route.data.subscribe((data: {productOptions: any}) => {
