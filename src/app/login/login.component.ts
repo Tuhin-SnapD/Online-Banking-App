@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import {AlertService} from '../core/alert/alert.service';
 import {Alert} from '../core/alert/alert';
+import { HomeResolver } from '../home/home.resolver';
 
 
 @Component({
@@ -30,7 +31,10 @@ export class LoginComponent implements OnInit {
       const alertType = alertEvent.type;
       if (alertType === 'Authentication Success') {
         console.log('Authenctication success');
-        this.router.navigate(['/home'], {replaceUrl: true});
+        this.router.navigate(['/home'], {replaceUrl: true})
+        .then(() => {
+          window.location.reload();
+        });
       } else if (alertType === 'Password Reset Required'){
         this.resetPassword = true;
       }
