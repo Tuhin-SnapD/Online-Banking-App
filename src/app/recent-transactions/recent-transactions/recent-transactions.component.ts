@@ -26,7 +26,7 @@ export class RecentTransactionsComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
 
-    console.log('Here from oninit of recent transactions component', this.transactions);
+    // Recent transactions loaded
   }
 
   ngAfterViewInit(): void {

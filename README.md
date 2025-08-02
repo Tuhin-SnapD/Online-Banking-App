@@ -1,65 +1,197 @@
 # Online Banking App
 
-Online Banking App is developed by me and 3 of my friends inspired by existing models. The app leverages standard web technologies and was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.7.
+A modern, feature-rich online banking application built with Angular 15. This application provides a comprehensive banking experience with account management, transfers, loans, and more.
 
-## Getting Started
+## 🚀 Features
 
-1. Ensure you have the following installed in your system:
+- **Account Management**: View and manage savings, loan, and share accounts
+- **Fund Transfers**: Transfer money between accounts with review functionality
+- **Third Party Transfers (TPT)**: Send money to external beneficiaries
+- **Loan Applications**: Apply for loans with validation
+- **Transaction History**: View recent transactions across all accounts
+- **Beneficiary Management**: Add and manage transfer beneficiaries
+- **Charges Overview**: Monitor account charges and fees
+- **Responsive Design**: Mobile-friendly interface with Material Design
+- **Authentication**: Secure login with session management
+- **Multi-language Support**: Internationalization ready
 
-    [`git`](https://git-scm.com/)
+## 🛠️ Technology Stack
 
-    [`npm`](https://nodejs.org/en/download/)
+- **Frontend**: Angular 15.2.9
+- **UI Framework**: Angular Material 15.2.9
+- **Styling**: SCSS with Flex Layout
+- **Charts**: Chart.js and CanvasJS
+- **Icons**: FontAwesome
+- **State Management**: RxJS
+- **Build Tool**: Angular CLI 15.2.9
+- **Package Manager**: npm
 
-2. Install [angular-cli](https://github.com/angular/angular-cli) globally.
+## 📋 Prerequisites
+
+Before running this application, make sure you have the following installed:
+
+- [Node.js](https://nodejs.org/) (v14 or higher)
+- [npm](https://www.npmjs.com/) (comes with Node.js)
+- [Git](https://git-scm.com/)
+
+## 🚀 Getting Started
+
+### 1. Install Angular CLI
+
+```bash
+npm install -g @angular/cli@15.2.9
 ```
-npm install -g @angular/cli@9.1.7
-```
 
-3. Clone the project locally into your system.
-```
+### 2. Clone the Repository
+
+```bash
 git clone https://github.com/Tuhin-SnapD/Online-Banking-App.git
+cd Online-Banking-App
 ```
 
-4. `cd` into project root directory and make sure you are on the master branch.
+### 3. Install Dependencies
 
-5. Install the dependencies.
-```
+```bash
 npm install
 ```
 
-6. To preview the app, run the following command and navigate to `http://localhost:4200/`.
-```
+### 4. Start Development Server
+
+```bash
 ng serve
-or
+# or
 npm start
 ```
 
-The application is using the development server mobile instance with basic authentication by default. The credentials for the same are:
- 
-    Username - selfservice_imobile
-    Password - password
+Navigate to `http://localhost:4200/` to view the application.
 
-**Important Note:** Please do not make any alterations to these credentials.
+### 5. Default Login Credentials
 
-## Code scaffolding
+The application uses a development server with basic authentication:
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+- **Username**: `selfservice_imobile`
+- **Password**: `password`
 
-## Build
+> **Important**: These are development credentials. Do not use in production.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## 📁 Project Structure
 
-## Running unit tests
+```
+src/
+├── app/
+│   ├── accounts/          # Account management modules
+│   ├── beneficiaries/     # Beneficiary management
+│   ├── charges/          # Charges and fees
+│   ├── core/             # Core services and guards
+│   ├── home/             # Dashboard and overview
+│   ├── loans/            # Loan application
+│   ├── login/            # Authentication
+│   ├── transfers/        # Fund transfers
+│   ├── tpt/              # Third party transfers
+│   └── shared/           # Shared components and modules
+├── assets/               # Static assets
+├── environments/         # Environment configurations
+└── translations/         # Internationalization files
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## 🏗️ Build Commands
 
-## Running end-to-end tests
+### Development Build
+```bash
+ng build
+```
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+### Production Build
+```bash
+ng build --configuration production
+```
 
-## Further help
+### GitHub Pages Deployment
+```bash
+npm run deploy
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## 🧪 Testing
 
-Thank you!
+### Unit Tests
+```bash
+ng test
+```
+
+### End-to-End Tests
+```bash
+ng e2e
+```
+
+### Linting
+```bash
+ng lint
+```
+
+## 🔧 Development
+
+### Generate New Components
+```bash
+ng generate component component-name
+```
+
+### Generate Services
+```bash
+ng generate service service-name
+```
+
+### Generate Modules
+```bash
+ng generate module module-name
+```
+
+## 📱 Features Overview
+
+### Dashboard
+- Account balance overview
+- Recent transactions
+- Quick action buttons
+- Charts and analytics
+
+### Account Management
+- View account details
+- Transaction history
+- Account statements
+- Balance information
+
+### Transfers
+- Internal transfers between accounts
+- Third-party transfers
+- Beneficiary management
+- Transfer history
+
+### Loans
+- Loan application form
+- Loan status tracking
+- Payment schedules
+- Loan history
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 👥 Team
+
+This project was developed by a team of 4 developers inspired by existing banking models.
+
+## 🆘 Support
+
+For support and questions, please open an issue in the GitHub repository.
+
+---
+
+**Note**: This is a demonstration application and should not be used for actual banking operations.
 

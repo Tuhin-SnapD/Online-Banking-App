@@ -5,7 +5,10 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 /** Custom Modules */
 import { IconsModule } from './icons.module';
-import {MaterialModule} from './material.module';
+import { MaterialModule } from './material.module';
+
+/** Custom Components */
+import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 
 /**
  * Shared Modules
@@ -19,13 +22,16 @@ import {MaterialModule} from './material.module';
     MaterialModule,
     ReactiveFormsModule
   ],
-  declarations: [],
+  declarations: [
+    LoadingSpinnerComponent
+  ],
   exports: [
     CommonModule,
     IconsModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    LoadingSpinnerComponent
   ]
 })
 export class SharedModule { }

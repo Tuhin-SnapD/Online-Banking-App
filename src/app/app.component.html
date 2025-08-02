@@ -1,1 +1,8 @@
-<router-outlet></router-outlet>
+<!-- Main App Container -->
+<div class="app-container">
+  <!-- Show shell for authenticated users -->
+  <online-banking-shell *ngIf="isAuthenticated"></online-banking-shell>
+  
+  <!-- Show router outlet for login and other public pages -->
+  <router-outlet *ngIf="!isAuthenticated"></router-outlet>
+</div>

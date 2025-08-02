@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import Chart from 'chart.js';
+import { Chart } from 'chart.js';
 
 @Component({
   selector: 'online-banking-loan-overview-pie',
@@ -14,7 +14,7 @@ export class LoanOverviewPieComponent implements OnInit {
   ngOnInit(): void {
     const labels = [];
     const data = [];
-    console.log('From the loan pie chart component', this.loanAccounts);
+    // Loan accounts loaded for pie chart
     this.loanAccounts.forEach((account) => {
       if (labels.indexOf(account.status.value) !== -1){
         data[labels.indexOf(account.status.value)] += 1;
@@ -25,8 +25,7 @@ export class LoanOverviewPieComponent implements OnInit {
       }
     });
 
-    console.log('labels', labels);
-    console.log('data', data);
+          // Chart data prepared
     this.chart = new Chart('loan-pie', {
       type: 'pie',
       data: {

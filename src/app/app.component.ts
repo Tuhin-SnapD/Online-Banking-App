@@ -1,14 +1,26 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Title} from '@angular/platform-browser';
-import {MatLegacySnackBar as MatSnackBar} from '@angular/material/legacy-snack-bar';
+import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from './core/authentication/authentication.service';
 
 @Component({
   selector: 'online-banking-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  
+  isAuthenticated = false;
 
-  title = 'online-banking';
+  constructor(private authenticationService: AuthenticationService) {}
+
+  ngOnInit(): void {
+    // Check authentication status
+    this.isAuthenticated = this.authenticationService.isAuthenticated();
+    
+    // Listen for authentication changes
+    this.authenticationService.authenticationState$.subscribe(
+      (authenticated: boolean) => {
+        this.isAuthenticated = authenticated;
+      }
+    );
+  }
 }

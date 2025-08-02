@@ -1,17 +1,248 @@
-
-#online-banking-toolbar {
-  position: relative;
-  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
-  background: dodgerblue;
+/* Modern Toolbar Styles */
+.modern-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-img {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
+.toolbar-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  height: 64px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
 }
-.ml-1 {
-  margin-left: 1rem;
+
+/* Left Section */
+.toolbar-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  .menu-button, .collapse-button {
+    color: white;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: scale(1.1);
+    }
+  }
+
+  .app-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.2rem;
+    font-weight: 600;
+
+    fa-icon {
+      color: white;
+    }
+
+    span {
+      color: white;
+      font-weight: 600;
+    }
+  }
+}
+
+/* Center Section */
+.toolbar-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+
+  .breadcrumb {
+    font-size: 1rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.9);
+  }
+}
+
+/* Right Section */
+.toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  .notification-button {
+    position: relative;
+    color: white;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: scale(1.1);
+    }
+
+    .notification-badge {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: #ff4757;
+      color: white;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      font-size: 0.7rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+    }
+  }
+
+  .user-menu {
+    .user-button {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: white;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 25px;
+      padding: 8px 16px;
+      transition: all 0.3s ease;
+      border: none;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: translateY(-1px);
+      }
+
+      .user-avatar {
+        fa-icon {
+          color: white;
+        }
+      }
+
+      .user-info {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        .user-name {
+          font-size: 0.9rem;
+          font-weight: 600;
+          color: white;
+          line-height: 1;
+        }
+
+        .user-role {
+          font-size: 0.7rem;
+          color: rgba(255, 255, 255, 0.8);
+          line-height: 1;
+        }
+      }
+
+      .dropdown-icon {
+        color: rgba(255, 255, 255, 0.8);
+        transition: transform 0.3s ease;
+      }
+
+      &:hover .dropdown-icon {
+        transform: rotate(180deg);
+      }
+    }
+  }
+}
+
+/* User Dropdown Menu */
+.user-dropdown-menu {
+  .menu-header {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: #f8f9fa;
+
+    .user-avatar-large {
+      fa-icon {
+        color: #667eea;
+      }
+    }
+
+    .user-details {
+      display: flex;
+      flex-direction: column;
+
+      .user-name {
+        font-weight: 600;
+        color: #333;
+        font-size: 1rem;
+      }
+
+      .user-email {
+        color: #666;
+        font-size: 0.8rem;
+      }
+    }
+  }
+
+  mat-divider {
+    margin: 0;
+  }
+
+  button[mat-menu-item] {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 20px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: #f0f0f0;
+    }
+
+    mat-icon {
+      fa-icon {
+        color: #667eea;
+      }
+    }
+
+    span {
+      color: #333;
+      font-weight: 500;
+    }
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .toolbar-content {
+    padding: 0 15px;
+  }
+
+  .toolbar-center {
+    display: none;
+  }
+
+  .user-info {
+    display: none !important;
+  }
+
+  .user-button {
+    padding: 8px !important;
+  }
+}
+
+/* Animations */
+@keyframes slideInDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.modern-toolbar {
+  animation: slideInDown 0.3s ease-out;
 }
 
 

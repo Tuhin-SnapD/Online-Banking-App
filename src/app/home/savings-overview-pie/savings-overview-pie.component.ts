@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import Chart from 'chart.js';
+import { Chart } from 'chart.js';
 
 @Component({
   selector: 'online-banking-savings-overview-pie',
@@ -24,8 +24,7 @@ export class SavingsOverviewPieComponent implements OnInit {
       }
     });
 
-    console.log('labels', labels);
-    console.log('data', data);
+          // Chart data prepared
 
     this.chart = new Chart('savings-pie', {
       type: 'pie',

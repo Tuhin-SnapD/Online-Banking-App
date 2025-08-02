@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import Chart from 'chart.js';
+import { Chart } from 'chart.js';
 
 @Component({
   selector: 'online-banking-share-overview-pie',
@@ -14,7 +14,7 @@ export class ShareOverviewPieComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.shareAccounts);
+    // Share accounts loaded
     const labels = [];
     const data = [];
     this.shareAccounts.forEach((account) => {
@@ -27,8 +27,7 @@ export class ShareOverviewPieComponent implements OnInit {
       }
     });
 
-    console.log('labels', labels);
-    console.log('data', data);
+          // Chart data prepared
 
     this.chart = new Chart('share-pie', {
       type: 'pie',

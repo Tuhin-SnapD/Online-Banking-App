@@ -1,28 +1,85 @@
-<div class="m-toolbar">
-<mat-toolbar fxLayout="row" color="primary" id="online-banking-toolbar">
+<!-- Modern Toolbar -->
+<div class="modern-toolbar">
+  <mat-toolbar color="primary" class="toolbar-content">
+    
+    <!-- Left Section -->
+    <div class="toolbar-left">
+      <button mat-icon-button (click)="toggleSidenav()" matTooltip="Toggle Menu" class="menu-button">
+        <fa-icon icon="bars" size="lg"></fa-icon>
+      </button>
+      
+      <button mat-icon-button (click)="toggleSidenavCollapse()" matTooltip="Collapse Sidebar" class="collapse-button" fxHide.lt-md="true">
+        <fa-icon *ngIf="!sidenavCollapsed" icon="chevron-left"></fa-icon>
+        <fa-icon *ngIf="sidenavCollapsed" icon="chevron-right"></fa-icon>
+      </button>
+      
+      <div class="app-title" fxHide.lt-md="true">
+        <fa-icon icon="university" size="lg"></fa-icon>
+        <span>Online Banking</span>
+      </div>
+    </div>
 
-  <button mat-icon-button *ngIf="!sidenavCollapsed" (click)="toggleSidenav()" matTooltip="Toggle Hide/Open">
-    <fa-icon icon="bars" size="lg" ></fa-icon>
+    <!-- Center Section -->
+    <div class="toolbar-center" fxHide.lt-md="true">
+      <div class="breadcrumb">
+        <span>{{ currentPage }}</span>
+      </div>
+    </div>
+
+    <!-- Right Section -->
+    <div class="toolbar-right">
+      <!-- Notifications -->
+      <button mat-icon-button matTooltip="Notifications" class="notification-button">
+        <fa-icon icon="bell" size="lg"></fa-icon>
+        <span class="notification-badge" *ngIf="notificationCount > 0">{{ notificationCount }}</span>
+      </button>
+      
+      <!-- User Menu -->
+      <div class="user-menu">
+        <button mat-button [matMenuTriggerFor]="userMenu" class="user-button">
+          <div class="user-avatar">
+            <fa-icon icon="user-circle" size="lg"></fa-icon>
+          </div>
+          <div class="user-info" fxHide.lt-md="true">
+            <span class="user-name">{{ username || 'User' }}</span>
+            <span class="user-role">Online Banking</span>
+          </div>
+          <fa-icon icon="chevron-down" size="sm" class="dropdown-icon"></fa-icon>
+        </button>
+      </div>
+    </div>
+
+  </mat-toolbar>
+</div>
+
+<!-- User Menu -->
+<mat-menu #userMenu="matMenu" [overlapTrigger]="false" yPosition="below" xPosition="after" class="user-dropdown-menu">
+  <div class="menu-header">
+    <div class="user-avatar-large">
+      <fa-icon icon="user-circle" size="2x"></fa-icon>
+    </div>
+    <div class="user-details">
+      <span class="user-name">{{ username || 'User' }}</span>
+      <span class="user-email">{{ userEmail || 'user@example.com' }}</span>
+    </div>
+  </div>
+  
+  <mat-divider></mat-divider>
+  
+  <button mat-menu-item [routerLink]="['/profile']">
+    <mat-icon>
+      <fa-icon icon="user" size="sm"></fa-icon>
+    </mat-icon>
+    <span>My Profile</span>
   </button>
-  <button mat-icon-button *ngIf="true" (click)="toggleSidenavCollapse()" matTooltip="Toggle Collapse" fxHide.lt-md="true">
-    <fa-icon *ngIf="!sidenavCollapsed" icon="chevron-left"></fa-icon>
-    <fa-icon *ngIf="sidenavCollapsed" icon="chevron-right"></fa-icon>
-  </button>
-
-  <span fxFlex="auto"></span>
-
-  <button mat-icon-button class="ml-1 img-button" [matMenuTriggerFor]="applicationMenu">
-    <img src="./assets/images/user_placeholder.png">
-  </button>
-</mat-toolbar>
-
-<mat-menu #applicationMenu="matMenu" [overlapTrigger]="false" yPosition="below" xPosition="after">
+  
   <button mat-menu-item [routerLink]="['/settings']">
     <mat-icon>
       <fa-icon icon="cog" size="sm"></fa-icon>
     </mat-icon>
     <span>Settings</span>
   </button>
+  
   <button mat-menu-item (click)="logout()">
     <mat-icon>
       <fa-icon icon="sign-out-alt" size="sm"></fa-icon>
@@ -30,4 +87,3 @@
     <span>Sign Out</span>
   </button>
 </mat-menu>
-</div>

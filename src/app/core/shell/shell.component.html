@@ -24,7 +24,9 @@
     <online-banking-toolbar [sidenav]="sidenav" (collapse)="toggleCollapse($event)"></online-banking-toolbar>
 
     <!-- Content -->
-    <online-banking-content></online-banking-content>
+    <div class="main-content">
+      <router-outlet></router-outlet>
+    </div>
     <!-- Footer -->
 
   </mat-sidenav-content>

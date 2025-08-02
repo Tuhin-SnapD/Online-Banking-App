@@ -3,42 +3,48 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Subscription } from 'rxjs';
-import {AlertService} from '../core/alert/alert.service';
-import {Alert} from '../core/alert/alert';
-import { HomeResolver } from '../home/home.resolver';
-
+import { AlertService } from '../core/alert/alert.service';
+import { Alert } from '../core/alert/alert';
 
 @Component({
   selector: 'online-banking-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
-  /** Trues if reset password component is on */
+export class LoginComponent implements OnInit, OnDestroy {
+  /** True if reset password component is on */
   resetPassword = false;
   /** Subscription to alerts */
-  alert$: Subscription;
+  private alertSubscription: Subscription | null = null;
 
   /**
    * @param {AlertService} alertService Alert Service
    * @param {Router} router Navigation Router
    */
-  constructor( private alertService: AlertService,
-               private router: Router) { }
+  constructor(
+    private readonly alertService: AlertService,
+    private readonly router: Router
+  ) { }
 
   ngOnInit(): void {
-    this.alert$ = this.alertService.alertEvent.subscribe((alertEvent: Alert) => {
+    this.alertSubscription = this.alertService.alertEvent.subscribe((alertEvent: Alert) => {
       const alertType = alertEvent.type;
       if (alertType === 'Authentication Success') {
-        console.log('Authenctication success');
-        this.router.navigate(['/home'], {replaceUrl: true})
-        .then(() => {
-          window.location.reload();
-        });
-      } else if (alertType === 'Password Reset Required'){
+        // Authentication success
+        this.router.navigate(['/home'], { replaceUrl: true })
+          .catch(error => {
+            console.error('Navigation error:', error);
+          });
+      } else if (alertType === 'Password Reset Required') {
         this.resetPassword = true;
       }
     });
   }
 
+  ngOnDestroy(): void {
+    if (this.alertSubscription) {
+      this.alertSubscription.unsubscribe();
+      this.alertSubscription = null;
+    }
+  }
 }

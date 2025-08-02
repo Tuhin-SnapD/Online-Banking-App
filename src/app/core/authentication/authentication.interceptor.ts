@@ -31,7 +31,8 @@ export class AuthenticationInterceptor implements HttpInterceptor {
    * Intercepts a Http request and sets the request headers.
    */
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    request = request.clone({ setHeaders: httpOptions.headers });
+    const headers = { ...httpOptions.headers };
+    request = request.clone({ setHeaders: headers });
     return next.handle(request);
   }
 

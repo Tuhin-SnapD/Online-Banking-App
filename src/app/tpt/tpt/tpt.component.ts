@@ -51,6 +51,6 @@ export class TptComponent implements OnInit {
   }
 
   submitTransferRequest() {
-    console.log('trying to submit the transfer request', this.transferForm.value);
+    // Transfer request submitted
   }
 }

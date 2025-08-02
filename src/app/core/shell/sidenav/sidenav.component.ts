@@ -1,6 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {AuthenticationService} from '../../authentication/authentication.service';
+import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthenticationService } from '../../authentication/authentication.service';
 
 @Component({
   selector: 'online-banking-sidenav',
@@ -9,28 +9,32 @@ import {AuthenticationService} from '../../authentication/authentication.service
 })
 export class SidenavComponent implements OnInit {
   /** True if sidenav is in collapsed state. */
-  @Input() sidenavCollapsed: boolean;
+  @Input() sidenavCollapsed = false;
+  
   /** Username of authenticated user. */
-  username: string;
-  displayImage: string;
+  username = 'Welcome';
+  displayImage = '';
 
   /**
    * @param {Router} router Router for navigation.
    * @param {AuthenticationService} authenticationService Authentication Service.
    */
-  constructor(private router: Router,
-              private authenticationService: AuthenticationService
-              ) { }
+  constructor(
+    private readonly router: Router,
+    private readonly authenticationService: AuthenticationService
+  ) { }
 
   /**
    * Sets the username of the authenticated user.
    */
-  ngOnInit() {
+  ngOnInit(): void {
     const credentials = this.authenticationService.getCredentials();
-    this.username = credentials.username;
+    if (credentials) {
+      this.username = credentials.username;
+    }
   }
 
-  // TODO: Implement this method for displaying the profile picture
+  // Profile picture display method - to be implemented
   // setDisplayImage() {
   //   this.sidenavService.getClientImage().subscribe((displayImage) => {
   //     this.displayImage = displayImage.toString();
@@ -40,11 +44,11 @@ export class SidenavComponent implements OnInit {
   /**
    * Logs out the authenticated user and redirects to login page.
    */
-  logout() {
+  logout(): void {
     this.authenticationService.logout()
-      .subscribe(() => this.router.navigate(['/login'], { replaceUrl: true }));
+      .subscribe({
+        next: () => this.router.navigate(['/login'], { replaceUrl: true }),
+        error: (error) => console.error('Logout error:', error)
+      });
   }
-
-
-
 }

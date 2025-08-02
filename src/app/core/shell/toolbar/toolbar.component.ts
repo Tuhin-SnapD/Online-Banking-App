@@ -1,11 +1,11 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Router} from '@angular/router';
-import {AuthenticationService} from '../../authentication/authentication.service';
-import {animate, style, transition, trigger} from '@angular/animations';
-import {Observable} from 'rxjs';
-import {BreakpointObserver, Breakpoints} from '@angular/cdk/layout';
-import {map} from 'rxjs/operators';
-import {MatSidenav} from '@angular/material/sidenav';
+import { Component, EventEmitter, Input, OnInit, Output, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthenticationService } from '../../authentication/authentication.service';
+import { animate, style, transition, trigger } from '@angular/animations';
+import { Observable, Subscription } from 'rxjs';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { map } from 'rxjs/operators';
+import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
   selector: 'online-banking-toolbar',
@@ -23,56 +23,87 @@ import {MatSidenav} from '@angular/material/sidenav';
     ])
   ]
 })
-export class ToolbarComponent implements OnInit {
+export class ToolbarComponent implements OnInit, OnDestroy {
 
   /** Subscription to breakpoint observer for handset. */
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+  readonly isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches)
     );
+  
   /** Side Navigation Collapse Event */
   sidenavCollapsed = false;
+  
+  /** User information */
+  username = 'User';
+  userEmail = 'user@example.com';
+  currentPage = 'Dashboard';
+  notificationCount = 0;
 
   /** Instance of side navigation drawer */
-  @Input() sidenav: MatSidenav;
+  @Input() sidenav!: MatSidenav;
+  
   /** Sidenav Collapse Event emitter */
   @Output() collapse = new EventEmitter<boolean>();
+
+  private handsetSubscription: Subscription | null = null;
+
   /**
+   * @param {BreakpointObserver} breakpointObserver Breakpoint Observer to detect screen size.
    * @param {Router} router Router
    * @param {AuthenticationService} authenticationService Authentication Service
    */
-  constructor(private breakpointObserver: BreakpointObserver,
-              private router: Router,
-              private authenticationService: AuthenticationService) { }
+  constructor(
+    private readonly breakpointObserver: BreakpointObserver,
+    private readonly router: Router,
+    private readonly authenticationService: AuthenticationService
+  ) { }
 
   ngOnInit(): void {
-    this.isHandset$.subscribe(isHandset => {
+    // Get user information
+    const credentials = this.authenticationService.getCredentials();
+    if (credentials) {
+      this.username = credentials.username;
+      this.userEmail = `${credentials.username}@banking.com`;
+    }
+    
+    this.handsetSubscription = this.isHandset$.subscribe(isHandset => {
       if (isHandset && this.sidenavCollapsed) {
         this.toggleSidenavCollapse(false);
       }
     });
   }
 
+  ngOnDestroy(): void {
+    if (this.handsetSubscription) {
+      this.handsetSubscription.unsubscribe();
+      this.handsetSubscription = null;
+    }
+  }
+
   /**
    * Reverse the current state of side navigation
    */
-  toggleSidenav() {
+  toggleSidenav(): void {
     this.sidenav.toggle();
   }
+
   /**
    * Toggles the current collapsed state of sidenav.
    */
-  toggleSidenavCollapse(sidenavCollapsed?: boolean) {
-    this.sidenavCollapsed = sidenavCollapsed || !this.sidenavCollapsed;
+  toggleSidenavCollapse(sidenavCollapsed?: boolean): void {
+    this.sidenavCollapsed = sidenavCollapsed ?? !this.sidenavCollapsed;
     this.collapse.emit(this.sidenavCollapsed);
   }
 
   /**
    * Logs out the user and redirects to login page
    */
-  logout() {
+  logout(): void {
     this.authenticationService.logout()
-      .subscribe(() => this.router.navigate(['/login'], {replaceUrl: true}));
+      .subscribe({
+        next: () => this.router.navigate(['/login'], { replaceUrl: true }),
+        error: (error) => console.error('Logout error:', error)
+      });
   }
-
 }

@@ -62,6 +62,7 @@ import {
   faSearch,
   faShieldAlt,
   faSignOutAlt,
+  faSignInAlt,
   faSitemap,
   faSync,
   faTable,
@@ -92,7 +93,11 @@ import {
   faUserFriends,
   faClipboard,
   faInfoCircle,
-  faClipboardList
+  faClipboardList,
+  faPiggyBank,
+  faChartPie,
+  faSun,
+  faHistory
 } from '@fortawesome/free-solid-svg-icons';
 
 
@@ -165,6 +170,7 @@ export class IconsModule {
       faSearch,
       faShieldAlt,
       faSignOutAlt,
+      faSignInAlt,
       faSitemap,
       faSync,
       faTable,
@@ -195,6 +201,10 @@ export class IconsModule {
       faUserFriends,
       faClipboard,
       faInfoCircle,
-      faClipboardList);
+      faClipboardList,
+      faPiggyBank,
+      faChartPie,
+      faSun,
+      faHistory);
   }
 }

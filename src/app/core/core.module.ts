@@ -2,6 +2,7 @@ import {NgModule, Optional, SkipSelf} from '@angular/core';
 import {SharedModule} from '../shared/shared.module';
 import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 import {RouteReuseStrategy, RouterModule} from '@angular/router';
+import {LayoutModule} from '@angular/cdk/layout';
 import {AuthenticationService} from './authentication/authentication.service';
 import {AuthenticationGuard} from './authentication/authentication.guard';
 import {AuthenticationInterceptor} from './authentication/authentication.interceptor';
@@ -22,10 +23,16 @@ import { ToolbarComponent } from './shell/toolbar/toolbar.component';
   imports: [
     SharedModule,
     HttpClientModule,
-    RouterModule
+    RouterModule,
+    LayoutModule
   ],
   exports: [
-    SharedModule
+    SharedModule,
+    LayoutModule,
+    ShellComponent,
+    ContentComponent,
+    SidenavComponent,
+    ToolbarComponent
   ],
   providers: [
     AuthenticationService,
@@ -38,8 +45,23 @@ import { ToolbarComponent } from './shell/toolbar/toolbar.component';
     },
     HttpCacheService,
     ApiPrefixInterceptor,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ApiPrefixInterceptor,
+      multi: true
+    },
     ErrorHandlerInterceptor,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorHandlerInterceptor,
+      multi: true
+    },
     CacheInterceptor,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: CacheInterceptor,
+      multi: true
+    },
     {
       provide: HttpClient,
       useClass: HttpService

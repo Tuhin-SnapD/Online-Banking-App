@@ -53,7 +53,7 @@ export class ApplyLoanComponent implements OnInit {
 
   loanProductValid(loanProduct): boolean{
     const product = loanProduct.product;
-    console.log(product);
+          // Product loaded
     const neededKeys = ['maxNumberOfRepayments', 'minPrincipal', 'maxPrincipal', 'repaymentEvery',
       'repaymentFrequencyType', 'maxNumberOfRepayments', 'minInterestRatePerPeriod', 'amortizationType',
       'interestType', 'transactionProcessingStrategyId', 'interestCalculationPeriodType'];
@@ -61,7 +61,7 @@ export class ApplyLoanComponent implements OnInit {
   }
 
   loanProductSelected(selection: any){
-    console.log(selection.value);
+          // Selection value processed
     this.loanProductLoaded = false;
     this.loanProductDetails = null;
     const productId = selection.value;
@@ -104,9 +104,9 @@ export class ApplyLoanComponent implements OnInit {
       transactionProcessingStrategyId: loanProduct.transactionProcessingStrategyId,
       loanTermFrequency: loanProduct.maxNumberOfRepayments * loanProduct.repaymentEvery,
     };
-    console.log(loan);
+    // Loan application submitted
     this.loanService.requestNewLoan(loan).subscribe(res => {
-      console.log(res);
+      // Loan application successful
       this.applyLoanForm.reset();
       Object.keys(this.applyLoanForm.controls).forEach(key => {
         this.applyLoanForm.controls[key].setErrors(null);

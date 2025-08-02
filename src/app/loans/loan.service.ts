@@ -24,7 +24,7 @@ export class LoanService {
   requestNewLoan(loan: LoanRequest){
     loan.clientId = this.authenticationService.getCredentials().userId;
     loan.principal = loan.principal.toString();
-    console.log(loan);
+    // Loan data processed
     return this.http.post('/self/loans', loan);
   }
 

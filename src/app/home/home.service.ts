@@ -14,9 +14,12 @@ export class HomeService {
               private authenticationService: AuthenticationService) { }
 
   getAccounts(): Observable<any> {
-    const userId = this.authenticationService.getCredentials().userId;
-    console.log('From the home service get account method ', userId);
-    return this.http.get(`/self/clients/${userId}/accounts`);
+    const credentials = this.authenticationService.getCredentials();
+    if (!credentials || !credentials.userId) {
+      throw new Error('User credentials not found or invalid');
+    }
+    // Getting accounts for user
+    return this.http.get(`/self/clients/${credentials.userId}/accounts`);
   }
 
 }
