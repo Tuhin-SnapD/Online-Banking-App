@@ -16,3 +16,31 @@
   </mat-tab>
 </mat-tab-group>
 
+<!-- Account Actions -->
+<div class="account-actions" *ngIf="savingsAccounts?.length > 0 || loanAccounts?.length > 0 || shareAccounts?.length > 0">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <fa-icon icon="cogs" size="sm"></fa-icon>
+        Account Services
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div class="actions-grid">
+        <button mat-raised-button color="primary" [routerLink]="['/accounts/statements']">
+          <fa-icon icon="file-alt"></fa-icon>
+          Account Statements
+        </button>
+        <button mat-raised-button color="accent" [routerLink]="['/accounts/standing-instructions']">
+          <fa-icon icon="clock"></fa-icon>
+          Standing Instructions
+        </button>
+        <button mat-raised-button color="warn" [routerLink]="['/loans/apply']">
+          <fa-icon icon="hand-holding-usd"></fa-icon>
+          Apply for Loan
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>
+

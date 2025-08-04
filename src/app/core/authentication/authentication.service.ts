@@ -59,7 +59,9 @@ export class AuthenticationService {
     try {
       const savedCredentials = this.getStoredCredentials();
       if (savedCredentials && this.isValidCredentials(savedCredentials)) {
-        this.authenticationInterceptor.setAuthorizationToken(savedCredentials.base64EncodedAuthenticationKey);
+        if (savedCredentials.base64EncodedAuthenticationKey) {
+          this.authenticationInterceptor.setAuthorizationToken(savedCredentials.base64EncodedAuthenticationKey);
+        }
         this.authenticationStateSubject.next(true);
       }
     } catch (error) {
@@ -136,7 +138,9 @@ export class AuthenticationService {
    * @param {Credentials} credentials Authenticated user's credentials
    */
   private onLoginSuccess(credentials: Credentials): void {
-    this.authenticationInterceptor.setAuthorizationToken(credentials.base64EncodedAuthenticationKey);
+    if (credentials.base64EncodedAuthenticationKey) {
+      this.authenticationInterceptor.setAuthorizationToken(credentials.base64EncodedAuthenticationKey);
+    }
     this.setCredentials(credentials);
     this.authenticationStateSubject.next(true);
     this.alertService.alert({ 
@@ -173,7 +177,18 @@ export class AuthenticationService {
    */
   isAuthenticated(): boolean {
     const credentials = this.getStoredCredentials();
-    return !!(credentials && this.isSelfServiceUser());
+    const isAuth = !!(credentials && this.isSelfServiceUser());
+    console.log('AuthenticationService.isAuthenticated():', {
+      hasCredentials: !!credentials,
+      isSelfServiceUser: this.isSelfServiceUser(),
+      result: isAuth,
+      credentials: credentials ? {
+        userId: credentials.userId,
+        username: credentials.username,
+        roles: credentials.roles
+      } : null
+    });
+    return isAuth;
   }
 
   /**
@@ -181,18 +196,54 @@ export class AuthenticationService {
    * @returns {Credentials | null} the credentials in case of authenticated user else null
    */
   getCredentials(): Credentials | null {
-    return this.getStoredCredentials();
+    const credentials = this.getStoredCredentials();
+    console.log('AuthenticationService.getCredentials():', credentials);
+    return credentials;
   }
 
   /**
-   * Sends a password reset mail
-   * @param {string} email Email id of user
-   * @returns {boolean} True if reset email was sent
+   * Returns the currently authenticated user.
+   * This is a convenience wrapper around getCredentials() so that
+   * components do not need to know about the underlying storage logic.
+   * @returns {Credentials | null} Authenticated user's credentials or null if the user is not logged in.
    */
-  resetPassword(email: string): boolean {
-    // Implementation pending - should make HTTP call to reset password endpoint
-    console.warn('Password reset functionality not implemented');
-    return false;
+  getCurrentUser(): Credentials | null {
+    return this.getCredentials();
+  }
+
+  /**
+   * Resets user password
+   * @param {string} email Email id of user
+   * @param {string} username Username of user
+   * @param {string} newPassword New password
+   * @returns {Observable<boolean>} True if password was reset successfully
+   */
+  resetPassword(email: string, username: string, newPassword: string): Observable<boolean> {
+    const resetData = {
+      username: username,
+      email: email,
+      newPassword: newPassword
+    };
+
+    return this.http.post<any>('/fineract-provider/api/v1/self/users/password', resetData)
+      .pipe(
+        map(response => {
+          console.log('Password reset successful:', response);
+          this.alertService.alert({ 
+            type: 'Reset Password Success', 
+            message: 'Password reset successful! You can now login with your new password.' 
+          });
+          return true;
+        }),
+        catchError(error => {
+          console.error('Password reset error:', error);
+          this.alertService.alert({ 
+            type: 'Reset Password Error', 
+            message: error.error?.defaultUserMessage || 'Password reset failed. Please try again.' 
+          });
+          return throwError(() => error);
+        })
+      );
   }
 
   /**

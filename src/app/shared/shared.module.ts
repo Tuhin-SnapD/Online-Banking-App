@@ -9,6 +9,7 @@ import { MaterialModule } from './material.module';
 
 /** Custom Components */
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
+import { FileSizePipe } from './pipes/file-size.pipe';
 
 /**
  * Shared Modules
@@ -23,7 +24,8 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
     ReactiveFormsModule
   ],
   declarations: [
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    FileSizePipe
   ],
   exports: [
     CommonModule,
@@ -31,7 +33,8 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
+    FileSizePipe
   ]
 })
 export class SharedModule { }

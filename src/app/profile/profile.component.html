@@ -1,0 +1,157 @@
+<div class="profile-container">
+  <mat-card class="profile-card">
+    <mat-card-header>
+      <mat-card-title>
+        <fa-icon icon="user" size="lg"></fa-icon>
+        My Profile
+      </mat-card-title>
+      <mat-card-subtitle>Personal Information</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div *ngIf="loading" class="loading-container">
+        <mat-spinner></mat-spinner>
+        <p>Loading profile information...</p>
+      </div>
+
+      <div *ngIf="error" class="error-container">
+        <fa-icon icon="exclamation-triangle" size="2x"></fa-icon>
+        <p>Failed to load profile information</p>
+        <button mat-raised-button color="primary" (click)="loadUserProfile()">
+          <fa-icon icon="refresh"></fa-icon>
+          Retry
+        </button>
+      </div>
+
+      <div *ngIf="!loading && !error && userProfile" class="profile-content">
+        <!-- Profile Header -->
+        <div class="profile-header">
+          <div class="profile-avatar">
+            <fa-icon icon="user-circle" size="4x"></fa-icon>
+          </div>
+          <div class="profile-info">
+            <h2>{{ getFullName() }}</h2>
+            <p class="account-number">Account: {{ userProfile.accountNo }}</p>
+            <p class="status" [class.active]="userProfile.active">
+              <fa-icon icon="circle" size="sm"></fa-icon>
+              {{ userProfile.status?.value || 'Unknown' }}
+            </p>
+          </div>
+        </div>
+
+        <mat-divider></mat-divider>
+
+        <!-- Personal Information -->
+        <div class="info-section">
+          <h3>
+            <fa-icon icon="user" size="sm"></fa-icon>
+            Personal Information
+          </h3>
+          
+          <div class="info-grid">
+            <div class="info-item">
+              <label>First Name</label>
+              <span>{{ userProfile.firstname || 'Not provided' }}</span>
+            </div>
+            
+            <div class="info-item">
+              <label>Last Name</label>
+              <span>{{ userProfile.lastname || 'Not provided' }}</span>
+            </div>
+            
+            <div class="info-item">
+              <label>Date of Birth</label>
+              <span>{{ userProfile.dateOfBirth | date:'mediumDate' || 'Not provided' }}</span>
+            </div>
+            
+            <div class="info-item">
+              <label>Gender</label>
+              <span>{{ userProfile.gender?.value || 'Not provided' }}</span>
+            </div>
+            
+            <div class="info-item">
+              <label>Mobile Number</label>
+              <span>{{ userProfile.mobileNo || 'Not provided' }}</span>
+            </div>
+            
+            <div class="info-item">
+              <label>Email Address</label>
+              <span>{{ userProfile.emailAddress || 'Not provided' }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Address Information -->
+        <div class="info-section" *ngIf="userProfile.address">
+          <h3>
+            <fa-icon icon="map-marker-alt" size="sm"></fa-icon>
+            Address Information
+          </h3>
+          
+          <div class="address-info">
+            <p>{{ getAddress() }}</p>
+          </div>
+        </div>
+
+        <!-- Office Information -->
+        <div class="info-section">
+          <h3>
+            <fa-icon icon="building" size="sm"></fa-icon>
+            Office Information
+          </h3>
+          
+          <div class="info-grid">
+            <div class="info-item">
+              <label>Office</label>
+              <span>{{ userProfile.officeName || 'Not provided' }}</span>
+            </div>
+            
+            <div class="info-item">
+              <label>Activation Date</label>
+              <span>{{ userProfile.activationDate | date:'mediumDate' || 'Not provided' }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Family Members -->
+        <div class="info-section" *ngIf="userProfile.familyMembers && userProfile.familyMembers.length > 0">
+          <h3>
+            <fa-icon icon="users" size="sm"></fa-icon>
+            Family Members
+          </h3>
+          
+          <div class="family-members">
+            <div class="family-member" *ngFor="let member of userProfile.familyMembers">
+              <div class="member-info">
+                <strong>{{ member.firstname }} {{ member.lastname }}</strong>
+                <span class="relationship">{{ member.relationship }}</span>
+                <span class="dob">{{ member.dateOfBirth | date:'mediumDate' }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Documents -->
+        <div class="info-section" *ngIf="userProfile.documents && userProfile.documents.length > 0">
+          <h3>
+            <fa-icon icon="file-alt" size="sm"></fa-icon>
+            Documents
+          </h3>
+          
+          <div class="documents">
+            <div class="document" *ngFor="let doc of userProfile.documents">
+              <div class="document-info">
+                <fa-icon icon="file-pdf" size="lg"></fa-icon>
+                <div class="document-details">
+                  <strong>{{ doc.name }}</strong>
+                  <span>{{ doc.fileName }}</span>
+                  <small>{{ doc.size | fileSize }} • {{ doc.uploadedOn | date:'short' }}</small>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div> 

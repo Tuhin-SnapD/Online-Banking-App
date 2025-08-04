@@ -1,3 +1,6 @@
-<div ng-show="graph.visible">
+<div class="pie-chart-container" *ngIf="shareAccounts && shareAccounts.length > 0">
   <canvas id="share-pie"></canvas>
+</div>
+<div *ngIf="!shareAccounts || shareAccounts.length === 0" class="no-data">
+  <p>No share accounts data available</p>
 </div>

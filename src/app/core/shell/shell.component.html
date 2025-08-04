@@ -20,14 +20,16 @@
   <!-- Content -->
   <mat-sidenav-content>
 
-    <!-- Toolbar -->
-    <online-banking-toolbar [sidenav]="sidenav" (collapse)="toggleCollapse($event)"></online-banking-toolbar>
+    <!-- Global Toolbar -->
+    <online-banking-toolbar
+      [sidenav]="sidenav"
+      (collapse)="toggleCollapse($event)">
+    </online-banking-toolbar>
 
-    <!-- Content -->
-    <div class="main-content">
+    <!-- Routed Views -->
+    <div class="content-area">
       <router-outlet></router-outlet>
     </div>
-    <!-- Footer -->
 
   </mat-sidenav-content>
 

@@ -25,6 +25,8 @@ const authorizationHeader = 'Authorization';
 @Injectable()
 export class AuthenticationInterceptor implements HttpInterceptor {
 
+  private authorizationToken: string | null = null;
+
   constructor() {}
 
   /**
@@ -32,6 +34,12 @@ export class AuthenticationInterceptor implements HttpInterceptor {
    */
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const headers = { ...httpOptions.headers };
+    
+    // Add authorization header if available
+    if (this.authorizationToken) {
+      headers[authorizationHeader] = `Basic ${this.authorizationToken}`;
+    }
+    
     request = request.clone({ setHeaders: headers });
     return next.handle(request);
   }
@@ -41,12 +49,13 @@ export class AuthenticationInterceptor implements HttpInterceptor {
    * @param {string} authenticationKey Authentication key.
    */
   setAuthorizationToken(authenticationKey: string) {
-    httpOptions.headers[authorizationHeader] = `Basic ${authenticationKey}`;
+    this.authorizationToken = authenticationKey;
   }
+  
   /**
    * Removes the authorization header.
    */
   removeAuthorization() {
-    delete httpOptions.headers[authorizationHeader];
+    this.authorizationToken = null;
   }
 }

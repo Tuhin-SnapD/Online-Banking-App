@@ -42,7 +42,9 @@ export class SavingsAccountsListComponent implements OnInit, AfterViewInit {
    * Initializes the data source, paginator and sorter for Permissions table
    */
   setAccountsTable() {
-    this.dataSource = new MatTableDataSource(this.savingsAccounts);
+    // Ensure savingsAccounts is an array before creating the data source
+    const savingsAccountsArray = Array.isArray(this.savingsAccounts) ? this.savingsAccounts : [];
+    this.dataSource = new MatTableDataSource(savingsAccountsArray);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
@@ -51,7 +53,9 @@ export class SavingsAccountsListComponent implements OnInit, AfterViewInit {
    * @param {string} filterValue Value to filter data
    */
   applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource) {
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
   }
 
 }

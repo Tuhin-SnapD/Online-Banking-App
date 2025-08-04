@@ -29,12 +29,15 @@ export class AuthenticationGuard implements CanActivate {
    * @returns {boolean} True if user is authenticated.
    */
   canActivate(): boolean {
+    console.log('AuthenticationGuard: Checking authentication status...');
+    
     if (this.authenticationService.isAuthenticated()) {
+      console.log('AuthenticationGuard: User is authenticated, allowing access');
       return true;
     }
 
-    log.debug('User not authenticated, redirecting to login...');
-            // Not authenticated, redirecting to login
+    console.log('AuthenticationGuard: User not authenticated, redirecting to login...');
+    // Not authenticated, redirecting to login
     this.authenticationService.logout();
     this.router.navigate(['/login'], { replaceUrl: true });
     return false;

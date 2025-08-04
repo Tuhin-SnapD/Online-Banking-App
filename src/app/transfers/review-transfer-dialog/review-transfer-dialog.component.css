@@ -1,0 +1,19 @@
+/* Review Transfer Dialog Component Styles */
+
+.review-transfer-dialog {
+  padding: 20px;
+}
+
+.dialog-header {
+  margin-bottom: 20px;
+}
+
+.dialog-content {
+  margin-bottom: 20px;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+} 

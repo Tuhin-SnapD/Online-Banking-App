@@ -5,7 +5,7 @@ import { Resolve } from '@angular/router';
 /** rxjs Imports */
 import { Observable } from 'rxjs';
 
-import { TptService } from './tpt.service';
+import { TptService } from './third-party-transfer.service';
 
 /**
  * Third Party Transfer Resolver

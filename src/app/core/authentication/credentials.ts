@@ -14,4 +14,10 @@ export interface Credentials {
   staffDisplayName?: string;
   userId?: number;
   username: string;
+  email?: string;
+  phone?: string;
+  lastLoginDate?: string;
+  accountLocked?: boolean;
+  failedLoginAttempts?: number;
+  passwordExpiryDate?: string;
 }

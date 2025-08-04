@@ -38,7 +38,7 @@ const routes: Routes = [
   },
   {
     path: 'tpt',
-    loadChildren: () => import('./tpt/tpt.module').then(m => m.TptModule),
+    loadChildren: () => import('./third-party-transfer/third-party-transfer.module').then(m => m.ThirdPartyTransferModule),
     canActivate: [AuthenticationGuard]
   },
   {
@@ -62,9 +62,23 @@ const routes: Routes = [
     canActivate: [AuthenticationGuard]
   },
   {
-    path: 'about-us',
-    loadChildren: () => import('./about-us/about-us.module').then(m => m.AboutUsModule),
+    path: 'profile',
+    loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule),
     canActivate: [AuthenticationGuard]
+  },
+  {
+    path: 'settings',
+    loadChildren: () => import('./settings/settings.module').then(m => m.SettingsModule),
+    canActivate: [AuthenticationGuard]
+  },
+  {
+    path: 'change-password',
+    loadChildren: () => import('./change-password/change-password.module').then(m => m.ChangePasswordModule),
+    canActivate: [AuthenticationGuard]
+  },
+  {
+    path: 'about-us',
+    loadChildren: () => import('./about-us/about-us.module').then(m => m.AboutUsModule)
   },
   {
     path: '**',

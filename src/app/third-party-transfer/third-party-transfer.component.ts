@@ -4,7 +4,7 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms
 
 @Component({
   selector: 'online-banking-tpt',
-  templateUrl: './tpt.component.html',
+  templateUrl: './third-party-transfer.component.html',
   styleUrls: ['./tpt.component.scss']
 })
 export class TptComponent implements OnInit {

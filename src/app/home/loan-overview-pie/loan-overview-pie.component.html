@@ -1,3 +1,6 @@
-<div ng-show="graph.visible">
-<canvas id="loan-pie"></canvas>
+<div class="pie-chart-container" *ngIf="loanAccounts && loanAccounts.length > 0">
+  <canvas id="loan-pie"></canvas>
+</div>
+<div *ngIf="!loanAccounts || loanAccounts.length === 0" class="no-data">
+  <p>No loan accounts data available</p>
 </div>

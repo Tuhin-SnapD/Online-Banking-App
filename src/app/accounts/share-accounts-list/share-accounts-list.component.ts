@@ -38,7 +38,9 @@ export class ShareAccountsListComponent implements OnInit, AfterViewInit {
   }
 
   setAccountsTable() {
-    this.dataSource = new MatTableDataSource(this.shareAccounts);
+    // Ensure shareAccounts is an array before creating the data source
+    const shareAccountsArray = Array.isArray(this.shareAccounts) ? this.shareAccounts : [];
+    this.dataSource = new MatTableDataSource(shareAccountsArray);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
@@ -47,7 +49,9 @@ export class ShareAccountsListComponent implements OnInit, AfterViewInit {
    * @param filterValue
    */
   applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource) {
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
   }
 
 }

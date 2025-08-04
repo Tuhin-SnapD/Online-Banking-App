@@ -3,10 +3,12 @@ node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+pnpm-debug.log*
 
 # Build outputs
 dist/
 build/
+.angular/cache/
 .angular/cache/
 
 # Environment files
@@ -15,6 +17,7 @@ build/
 .env.development.local
 .env.test.local
 .env.production.local
+.env.staging
 
 # IDE and editor files
 .vscode/
@@ -22,6 +25,9 @@ build/
 *.swp
 *.swo
 *~
+.project
+.classpath
+.settings/
 
 # OS generated files
 .DS_Store
@@ -31,10 +37,15 @@ build/
 .Trashes
 ehthumbs.db
 Thumbs.db
+desktop.ini
 
 # Logs
 logs
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
 
 # Runtime data
 pids
@@ -45,6 +56,7 @@ pids
 # Coverage directory used by tools like istanbul
 coverage/
 *.lcov
+.nyc_output
 
 # nyc test coverage
 .nyc_output
@@ -158,3 +170,68 @@ build/Release
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+# Additional Angular/Node.js patterns
+.firebase/
+.firebaserc
+firebase-debug.log
+firestore-debug.log
+ui-debug.log
+
+# Local Netlify folder
+.netlify
+
+# Sentry Config File
+.sentryclirc
+
+# Turbo
+.turbo
+
+# Vercel
+.vercel
+
+# Local development
+*.local
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# Certificate files
+*.pem
+*.key
+*.crt
+
+# Docker
+.dockerignore
+docker-compose.override.yml
+
+# Kubernetes
+*.kubeconfig
+
+# Terraform
+*.tfstate
+*.tfstate.*
+.terraform/
+.terraform.lock.hcl
+
+# Helm
+charts/*.tgz
+
+# Local development tools
+.history/
+.vscode-server/
+
+# Browser specific
+.browserslistrc
+
+# Performance monitoring
+.webpack/
+
+# Security
+.secrets
+secrets.json
+
+# Local development server
+mock-server.js

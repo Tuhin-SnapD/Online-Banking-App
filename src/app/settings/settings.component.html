@@ -1,0 +1,65 @@
+<div class="settings-container">
+  <mat-card class="settings-card">
+    <mat-card-header>
+      <mat-card-title>
+        <fa-icon icon="cog" size="lg"></fa-icon>
+        User Settings
+      </mat-card-title>
+      <mat-card-subtitle>Customize your banking experience</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div *ngIf="loading" class="loading-container">
+        <mat-spinner></mat-spinner>
+        <p>Loading settings...</p>
+      </div>
+
+      <div *ngIf="loadingError && !loading" class="error-container">
+        <fa-icon icon="exclamation-triangle" size="lg" class="error-icon"></fa-icon>
+        <h3>Failed to Load Settings</h3>
+        <p>{{ errorMessage }}</p>
+        <button mat-raised-button color="primary" (click)="retryLoadSettings()">
+          <fa-icon icon="redo"></fa-icon>
+          Retry
+        </button>
+      </div>
+
+      <form [formGroup]="settingsForm" *ngIf="!loading && !loadingError" class="settings-form">
+        
+        <!-- Simple Test Form -->
+        <div class="settings-section">
+          <h3>Test Settings</h3>
+          
+          <div class="form-grid">
+            <mat-form-field>
+              <mat-label>Language</mat-label>
+              <mat-select formControlName="language">
+                <mat-option value="en">English</mat-option>
+                <mat-option value="es">Spanish</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-label>Timezone</mat-label>
+              <mat-select formControlName="timezone">
+                <mat-option value="America/New_York">Eastern Time</mat-option>
+                <mat-option value="America/Chicago">Central Time</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+
+
+        <!-- Action Buttons -->
+        <div class="settings-actions">
+          <button mat-raised-button color="primary" (click)="saveSettings()" [disabled]="settingsForm.invalid || saving">
+            <fa-icon icon="save"></fa-icon>
+            <span *ngIf="!saving">Save Settings</span>
+            <span *ngIf="saving">Saving...</span>
+          </button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div> 

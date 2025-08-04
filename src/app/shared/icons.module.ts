@@ -11,6 +11,7 @@ import {
   faArrowRight,
   faBars,
   faBell,
+  faBellSlash,
   faBook,
   faBriefcase,
   faBuilding,
@@ -97,7 +98,14 @@ import {
   faPiggyBank,
   faChartPie,
   faSun,
-  faHistory
+  faHistory,
+  faGlobe,
+  faMobileAlt,
+  faBullhorn,
+  faFingerprint,
+  faDesktop,
+  faHashtag,
+  faSave
 } from '@fortawesome/free-solid-svg-icons';
 
 
@@ -119,6 +127,7 @@ export class IconsModule {
       faArrowRight,
       faBars,
       faBell,
+      faBellSlash,
       faBook,
       faBriefcase,
       faBuilding,
@@ -205,6 +214,13 @@ export class IconsModule {
       faPiggyBank,
       faChartPie,
       faSun,
-      faHistory);
+      faHistory,
+      faGlobe,
+      faMobileAlt,
+      faBullhorn,
+      faFingerprint,
+      faDesktop,
+      faHashtag,
+      faSave);
   }
 }

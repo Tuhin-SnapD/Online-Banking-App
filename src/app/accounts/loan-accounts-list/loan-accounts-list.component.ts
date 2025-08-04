@@ -39,7 +39,9 @@ export class LoanAccountsListComponent implements OnInit, AfterViewInit {
   }
 
   setAccountsTable() {
-    this.dataSource = new MatTableDataSource(this.loanAccounts);
+    // Ensure loanAccounts is an array before creating the data source
+    const loanAccountsArray = Array.isArray(this.loanAccounts) ? this.loanAccounts : [];
+    this.dataSource = new MatTableDataSource(loanAccountsArray);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
@@ -49,7 +51,9 @@ export class LoanAccountsListComponent implements OnInit, AfterViewInit {
    * @param {string} filterValue Value to filter data.
    */
   applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource) {
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+    }
   }
 
 }

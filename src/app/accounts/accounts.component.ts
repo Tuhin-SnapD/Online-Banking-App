@@ -22,9 +22,9 @@ export class AccountsComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private router: Router) {
     this.route.data.subscribe((data: { accounts: any }) => {
-      this.loanAccounts = data.accounts.loanAccounts;
-      this.savingsAccounts = data.accounts.savingsAccounts;
-      this.shareAccounts = data.accounts.shareAccounts;
+      this.loanAccounts = data.accounts?.loanAccounts || [];
+      this.savingsAccounts = data.accounts?.savingsAccounts || [];
+      this.shareAccounts = data.accounts?.shareAccounts || [];
     });
   }
 

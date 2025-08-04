@@ -39,7 +39,9 @@ export class BeneficiariesListComponent implements OnInit, AfterViewInit {
   }
 
   setAccountsTable() {
-    this.dataSource = new MatTableDataSource(this.beneficiaries);
+    // Ensure beneficiaries is an array before creating the data source
+    const beneficiariesArray = Array.isArray(this.beneficiaries) ? this.beneficiaries : [];
+    this.dataSource = new MatTableDataSource(beneficiariesArray);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }

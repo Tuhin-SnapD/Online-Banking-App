@@ -1,0 +1,55 @@
+.account-actions {
+  margin-top: 20px;
+}
+
+.account-actions mat-card {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.account-actions mat-card-header {
+  background: #f8f9fa;
+  border-radius: 8px 8px 0 0;
+  margin: -16px -16px 16px -16px;
+  padding: 16px;
+}
+
+.account-actions mat-card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #333;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.actions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.actions-grid button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px;
+  font-weight: 500;
+  min-height: 60px;
+}
+
+.actions-grid button fa-icon {
+  font-size: 18px;
+}
+
+@media (max-width: 768px) {
+  .actions-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .actions-grid button {
+    min-height: 50px;
+  }
+}

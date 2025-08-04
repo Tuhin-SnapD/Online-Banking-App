@@ -6,6 +6,8 @@ import { Observable, Subscription } from 'rxjs';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { map } from 'rxjs/operators';
 import { MatSidenav } from '@angular/material/sidenav';
+import { HttpClient } from '@angular/common/http';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 
 @Component({
   selector: 'online-banking-toolbar',
@@ -39,6 +41,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   userEmail = 'user@example.com';
   currentPage = 'Dashboard';
   notificationCount = 0;
+  notifications: any[] = [];
 
   /** Instance of side navigation drawer */
   @Input() sidenav!: MatSidenav;
@@ -52,24 +55,32 @@ export class ToolbarComponent implements OnInit, OnDestroy {
    * @param {BreakpointObserver} breakpointObserver Breakpoint Observer to detect screen size.
    * @param {Router} router Router
    * @param {AuthenticationService} authenticationService Authentication Service
+   * @param {HttpClient} http HttpClient for API calls
+   * @param {MatSnackBar} snackBar SnackBar for notifications
    */
   constructor(
     private readonly breakpointObserver: BreakpointObserver,
     private readonly router: Router,
-    private readonly authenticationService: AuthenticationService
+    private readonly authenticationService: AuthenticationService,
+    private readonly http: HttpClient,
+    private readonly snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
     // Get user information
     const credentials = this.authenticationService.getCredentials();
     if (credentials) {
-      this.username = credentials.username;
-      this.userEmail = `${credentials.username}@banking.com`;
+      this.username = credentials.username || 'User';
+      this.userEmail = credentials.email || 'user@example.com';
     }
-    
+
+    // Load notifications
+    this.loadNotifications();
+
+    // Set up handset subscription
     this.handsetSubscription = this.isHandset$.subscribe(isHandset => {
-      if (isHandset && this.sidenavCollapsed) {
-        this.toggleSidenavCollapse(false);
+      if (isHandset) {
+        this.sidenavCollapsed = true;
       }
     });
   }
@@ -77,33 +88,91 @@ export class ToolbarComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.handsetSubscription) {
       this.handsetSubscription.unsubscribe();
-      this.handsetSubscription = null;
     }
   }
 
   /**
-   * Reverse the current state of side navigation
+   * Load notifications from the server
+   */
+  loadNotifications(): void {
+    this.http.get('/self/notifications').subscribe({
+      next: (response: any) => {
+        this.notifications = response.pageItems || [];
+        this.notificationCount = this.notifications.filter(n => !n.read).length;
+      },
+      error: (error) => {
+        console.error('Failed to load notifications:', error);
+      }
+    });
+  }
+
+  /**
+   * Mark notification as read
+   */
+  markNotificationAsRead(notificationId: number): void {
+    this.http.put(`/self/notifications/${notificationId}`, {}).subscribe({
+      next: () => {
+        // Update local notification state
+        const notification = this.notifications.find(n => n.id === notificationId);
+        if (notification) {
+          notification.read = true;
+          this.notificationCount = this.notifications.filter(n => !n.read).length;
+        }
+      },
+      error: (error) => {
+        console.error('Failed to mark notification as read:', error);
+      }
+    });
+  }
+
+  /**
+   * Toggle side navigation
    */
   toggleSidenav(): void {
     this.sidenav.toggle();
   }
 
   /**
-   * Toggles the current collapsed state of sidenav.
+   * Toggle side navigation collapse
    */
-  toggleSidenavCollapse(sidenavCollapsed?: boolean): void {
-    this.sidenavCollapsed = sidenavCollapsed ?? !this.sidenavCollapsed;
+  toggleSidenavCollapse(): void {
+    this.sidenavCollapsed = !this.sidenavCollapsed;
     this.collapse.emit(this.sidenavCollapsed);
   }
 
   /**
-   * Logs out the user and redirects to login page
+   * Logout user
    */
   logout(): void {
-    this.authenticationService.logout()
-      .subscribe({
-        next: () => this.router.navigate(['/login'], { replaceUrl: true }),
-        error: (error) => console.error('Logout error:', error)
-      });
+    this.http.post('/self/authentication/logout', {}).subscribe({
+      next: () => {
+        this.authenticationService.logout();
+        this.router.navigate(['/login']);
+      },
+      error: (error) => {
+        console.error('Logout error:', error);
+        // Still logout locally even if server call fails
+        this.authenticationService.logout();
+        this.router.navigate(['/login']);
+      }
+    });
+  }
+
+  /**
+   * Get notification icon based on type
+   */
+  getNotificationIcon(type: string): string {
+    switch (type) {
+      case 'INFO':
+        return 'info-circle';
+      case 'WARNING':
+        return 'exclamation-triangle';
+      case 'SUCCESS':
+        return 'check-circle';
+      case 'ERROR':
+        return 'times-circle';
+      default:
+        return 'bell';
+    }
   }
 }

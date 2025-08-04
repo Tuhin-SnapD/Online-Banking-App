@@ -24,12 +24,34 @@ mat-sidenav {
 mat-sidenav-content {
   background: #f8f9fa;
   overflow-x: hidden;
+}
 
-  .main-content {
-    padding: 0;
-    min-height: calc(100vh - 64px); // Account for toolbar height
-    background: transparent;
-  }
+// Main Layout Container
+.main-layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+}
+
+// Integrated Navbar
+.integrated-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  flex-shrink: 0;
+}
+
+// Content Area
+.content-area {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: transparent;
+  min-height: 0; // Important for flex layout
 }
 
 // Responsive Design
@@ -43,6 +65,18 @@ mat-sidenav-content {
     width: 100% !important;
     max-width: 100% !important;
   }
+  
+  .integrated-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1001;
+  }
+  
+  .content-area {
+    margin-top: 64px; // Account for fixed navbar
+  }
 }
 
 // Smooth Transitions
@@ -51,19 +85,19 @@ mat-sidenav {
 }
 
 // Custom Scrollbar for Content
-.main-content::-webkit-scrollbar {
+.content-area::-webkit-scrollbar {
   width: 8px;
 }
 
-.main-content::-webkit-scrollbar-track {
+.content-area::-webkit-scrollbar-track {
   background: #f1f1f1;
 }
 
-.main-content::-webkit-scrollbar-thumb {
+.content-area::-webkit-scrollbar-thumb {
   background: #c1c1c1;
   border-radius: 4px;
 }
 
-.main-content::-webkit-scrollbar-thumb:hover {
+.content-area::-webkit-scrollbar-thumb:hover {
   background: #a8a8a8;
 }

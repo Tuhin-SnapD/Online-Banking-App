@@ -2,6 +2,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 
 /** Main Component */
 import { AppComponent } from './app.component';
@@ -24,9 +25,12 @@ import {BeneficiariesModule} from './beneficiaries/beneficiaries.module';
 import { TransfersModule } from './transfers/transfers.module';
 import { RecentTransactionsModule } from './recent-transactions/recent-transactions.module';
 import { ChargesModule } from './charges/charges.module';
-import { TptModule } from './tpt/tpt.module';
+import { ThirdPartyTransferModule } from './third-party-transfer/third-party-transfer.module';
 import { AboutUsModule } from './about-us/about-us.module';
 import { LoansModule } from './loans/loans.module';
+import { ProfileModule } from './profile/profile.module';
+import { SettingsModule } from './settings/settings.module';
+import { ChangePasswordModule } from './change-password/change-password.module';
 
 /**
  * App Module
@@ -41,6 +45,7 @@ import { LoansModule } from './loans/loans.module';
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    RouterModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     CoreModule,
     LoginModule,
@@ -50,9 +55,12 @@ import { LoansModule } from './loans/loans.module';
     TransfersModule,
     RecentTransactionsModule,
     ChargesModule,
-    TptModule,
+    ThirdPartyTransferModule,
     AboutUsModule,
     LoansModule,
+    ProfileModule,
+    SettingsModule,
+    ChangePasswordModule,
     AppRoutingModule,
   ],
   providers: [],

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormGroup, UntypedFormBuilder, Validators, FormGroupDirective } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
+import { Router } from '@angular/router';
 
 /** rxjs Imports */
 import { finalize } from 'rxjs/operators';
@@ -26,11 +27,13 @@ export class LoginFormComponent implements OnInit {
    * @param {FormBuilder} formBuilder Form Builder
    * @param {AuthenticationService} authenticationService Authentication Service
    * @param {AlertService} alertService Alert Service
+   * @param {Router} router Navigation Router
    */
   constructor(
     private readonly formBuilder: UntypedFormBuilder,
     private readonly authenticationService: AuthenticationService,
-    private readonly alertService: AlertService
+    private readonly alertService: AlertService,
+    private readonly router: Router
   ) { }
 
   /**
@@ -78,13 +81,10 @@ export class LoginFormComponent implements OnInit {
   }
 
   /**
-   * Display the forgot password component
+   * Navigate to reset password page
    */
   forgotPassword(): void {
-    this.alertService.alert({ 
-      type: 'Password Reset Required', 
-      message: 'Password reset functionality is not yet implemented.' 
-    });
+    this.router.navigate(['/reset-password'], { replaceUrl: true });
   }
 
   /**

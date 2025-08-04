@@ -13,7 +13,7 @@ export class BeneficiariesComponent implements OnInit {
   constructor(private route: ActivatedRoute,
               private router: Router) {
       this.route.data.subscribe((data: {beneficiaries: any}) => {
-        this.beneficiaries = data.beneficiaries;
+        this.beneficiaries = data.beneficiaries || [];
       });
     }
 

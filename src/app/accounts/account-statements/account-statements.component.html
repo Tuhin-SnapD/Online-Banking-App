@@ -1,0 +1,81 @@
+<div class="account-statements-container">
+  <div class="header">
+    <h2>Account Statements</h2>
+    <p>View and download your account statements</p>
+  </div>
+
+  <div class="content">
+    <div *ngIf="loading" class="loading">
+      <mat-spinner diameter="40"></mat-spinner>
+      <p>Loading statements...</p>
+    </div>
+
+    <div *ngIf="error" class="error">
+      <mat-icon>error</mat-icon>
+      <p>{{ error }}</p>
+      <button mat-raised-button color="primary" (click)="loadStatements()">
+        Retry
+      </button>
+    </div>
+
+    <div *ngIf="!loading && !error && statements.length === 0" class="no-data">
+      <mat-icon>description</mat-icon>
+      <p>No statements available</p>
+    </div>
+
+    <div *ngIf="!loading && !error && statements.length > 0" class="statements-table">
+      <table mat-table [dataSource]="statements" class="mat-elevation-z8">
+        <!-- Statement ID Column -->
+        <ng-container matColumnDef="statementId">
+          <th mat-header-cell *matHeaderCellDef>Statement ID</th>
+          <td mat-cell *matCellDef="let statement">{{ statement.statementId }}</td>
+        </ng-container>
+
+        <!-- Statement Date Column -->
+        <ng-container matColumnDef="statementDate">
+          <th mat-header-cell *matHeaderCellDef>Statement Date</th>
+          <td mat-cell *matCellDef="let statement">{{ statement.statementDate | date:'mediumDate' }}</td>
+        </ng-container>
+
+        <!-- Period Column -->
+        <ng-container matColumnDef="period">
+          <th mat-header-cell *matHeaderCellDef>Period</th>
+          <td mat-cell *matCellDef="let statement">
+            {{ statement.startDate | date:'shortDate' }} - {{ statement.endDate | date:'shortDate' }}
+          </td>
+        </ng-container>
+
+        <!-- Opening Balance Column -->
+        <ng-container matColumnDef="openingBalance">
+          <th mat-header-cell *matHeaderCellDef>Opening Balance</th>
+          <td mat-cell *matCellDef="let statement">
+            {{ statement.currency?.code }} {{ statement.openingBalance | number:'1.2-2' }}
+          </td>
+        </ng-container>
+
+        <!-- Closing Balance Column -->
+        <ng-container matColumnDef="closingBalance">
+          <th mat-header-cell *matHeaderCellDef>Closing Balance</th>
+          <td mat-cell *matCellDef="let statement">
+            {{ statement.currency?.code }} {{ statement.closingBalance | number:'1.2-2' }}
+          </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let statement">
+            <button mat-icon-button color="primary" 
+                    (click)="downloadStatement(statement.accountType, statement.accountId, statement.statementId)"
+                    matTooltip="Download Statement">
+              <mat-icon>download</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  </div>
+</div> 
